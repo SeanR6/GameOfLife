@@ -5,8 +5,8 @@ public class GameBoard {
     private int x;
     private int y;
     RandomGen random;
-
-    public void UI(){
+    //constructor
+    public void board(){
         x = 40;
         y = 40;
         board = new int[x][y];
