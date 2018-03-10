@@ -7,10 +7,19 @@ public class RandomGen {
     private static final int J = 2147483647;
     private double output;
 
+
+
     //constructor
-    public void RandomGen(){
+    public RandomGen(int x){
+        seed = System.currentTimeMillis();
+        generate(x);
+    }
+
+    public RandomGen(){
         seed = System.currentTimeMillis();
     }
+
+
 
 
     //Function to generate random number between 0 and 1,

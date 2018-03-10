@@ -6,11 +6,12 @@ public class GameBoard {
     private int y;
     RandomGen random;
     //constructor
-    public void board(){
+
+    public GameBoard(){
         x = 40;
         y = 40;
         board = new int[x][y];
-        random = new RandomGen();
+        random = new RandomGen(x);
     }
 
     public int getX(){

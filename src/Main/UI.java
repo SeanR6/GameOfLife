@@ -1,7 +1,7 @@
 package Main;
 
 public class UI {
-    public void UI(GameBoard input){
+    public UI(GameBoard input){
         GameBoard board = input;
     }
 
