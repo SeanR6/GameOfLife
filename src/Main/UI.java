@@ -1,9 +1,10 @@
 package Main;
 
 public class UI {
-    public UI(GameBoard input){
-        GameBoard board = input;
-    }
+    //wtf even is this? look over later? maybe just for test case
+    //public UI(GameBoard input){
+    //    GameBoard board = input;
+    //}
 
     //prints the game field, to be printed after every turn to
     static void printUI(GameBoard board){
