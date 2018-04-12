@@ -14,7 +14,9 @@ public class GameBoard {
         random = new RandomGen(x);
 
     }
-
+    //TODO what corner is zero?
+    //Inital conclusion 0,0 is top left
+    //still shouldnt change math cause + is just right and down
     public int getX(){
         return x;
     }
@@ -27,7 +29,8 @@ public class GameBoard {
     }
 
     public void takeTurn(){
-        //iterate and apply checks for every cell
+        //iterate and apply checks for every cel
+        //TODO double check everything
         for(int i = 0; i < x;){
             for( int j = 0; j < y; j++){
                 int surroundingCells=0;
@@ -56,9 +59,74 @@ public class GameBoard {
                         ++surroundingCells;
                     if (check(i, j+1)==1)
                         ++surroundingCells;
-                    if(check(i+1, j-1) == 1)
+                    if(check(i-1, j+1) == 1)
                         ++surroundingCells;
-                    if(check(i, j-1) ==1)
+                    if(check(i-1, j) ==1)
+                        surroundingCells++;
+                    if(surroundingCells < 2){
+                        board[i][j] = 0;
+                    }else if(surroundingCells > 3){
+                        board[i][j] = 0;
+                    }else if(board[i][j] == 1 &&(surroundingCells == 3 || surroundingCells ==2) ){
+                        board[i][j] = 1;
+                    }else if( board[i][j] == 0 &&(surroundingCells == 2)){
+                        board[i][j] = 1;
+                    }
+                }else if(j == 0) {
+                    if (check(i + 1, j) == 1)
+                        ++surroundingCells;
+                    if (check(i + 1, j + 1) == 1)
+                        ++surroundingCells;
+                    if (check(i, j + 1) == 1)
+                        ++surroundingCells;
+                    if (check(i - 1, j) == 1)
+                        ++surroundingCells;
+                    if (check(i - 1, j + 1) == 1)
+                        surroundingCells++;
+                    if (surroundingCells < 2) {
+                        board[i][j] = 0;
+                    } else if (surroundingCells > 3) {
+                        board[i][j] = 0;
+                    } else if (board[i][j] == 1 && (surroundingCells == 3 || surroundingCells == 2)) {
+                        board[i][j] = 1;
+                    } else if (board[i][j] == 0 && (surroundingCells == 2)) {
+                        board[i][j] = 1;
+                    }
+                }
+                //TODO CHANGE THE FOLLOWING TO MATCH FOR X,Y == MAX
+                //currently just copy and pasted from the previous section
+                //TODO is x == i and y == j?
+                //assuming ^^ for now
+                //TODO MIGHT BE ERROR EXCEEDING BOUNDS i.e THE CORNERS OF THE BOARD
+                if(i == x-1 && j == y-1){
+                    //encapsulate these if statements into a separate method, checkSurrounding?
+                    //maybe implement it only for the inside squares?
+                    if( check(i-1, j) ==1)
+                        ++surroundingCells;
+                    if (check(i-1, j-1) ==1)
+                        ++surroundingCells;
+                    if (check(i, j-1)==1)
+                        ++surroundingCells;
+                    if(surroundingCells < 2){
+                        board[i][j] = 0;
+                    }else if(surroundingCells > 3){
+                        board[i][j] = 0;
+                    }else if(board[i][j] == 1 &&(surroundingCells == 3 || surroundingCells ==2) ){
+                        board[i][j] = 1;
+                    }else if( board[i][j] == 0 &&(surroundingCells == 2)){
+                        board[i][j] = 1;
+                    }
+                    //DONE UP TO HERE ------------------------------------
+                } else if(i == x){
+                    if( check(i-1, j) ==1)
+                        ++surroundingCells;
+                    if (check(i-1, j+1) ==1)
+                        ++surroundingCells;
+                    if (check(i, j)==1)
+                        ++surroundingCells;
+                    if(check(i-1, j+1) == 1)
+                        ++surroundingCells;
+                    if(check(i, j+1) ==1)
                         surroundingCells++;
                     if(surroundingCells < 2){
                         board[i][j] = 0;
@@ -90,8 +158,7 @@ public class GameBoard {
                         board[i][j] = 1;
                     }
                 }
-                //Do the ones for i, j == max
-                //this is the ones for the middle of the board
+                //these are the ones for the middle of the board
                 else{
                     if (check(i + 1, j) == 1)
                         ++surroundingCells;
