@@ -14,8 +14,7 @@ public class GameBoard {
         random = new RandomGen(x);
 
     }
-    //TODO what corner is zero?
-    //Inital conclusion 0,0 is top left
+    //0,0 should be bottom left
     //still shouldnt change math cause + is just right and down
     public int getX(){
         return x;
@@ -30,18 +29,18 @@ public class GameBoard {
 
     public void takeTurn(){
         //iterate and apply checks for every cel
-        //TODO double check everything
+        //TODO change function names
         for(int i = 0; i < x;){
             for( int j = 0; j < y; j++){
                 int surroundingCells=0;
                 if(i == 0 && j == 0){
                     //encapsulate these if statements into a separate method, checkSurrounding?
                     //maybe implement it only for the inside squares?
-                    if( check(i+1, j) ==1)
+                    if(checkUp(i,j))
                         ++surroundingCells;
-                    if (check(i+1, j+1) ==1)
+                    if (checkUpRight(i,j))
                         ++surroundingCells;
-                    if (check(i, j+1)==1)
+                    if (checkRight(i,j))
                         ++surroundingCells;
                     if(surroundingCells < 2){
                         board[i][j] = 0;
@@ -53,15 +52,15 @@ public class GameBoard {
                         board[i][j] = 1;
                     }
                 } else if(i == 0){
-                    if( check(i+1, j) ==1)
+                    if(checkLeft(i,j))
                         ++surroundingCells;
-                    if (check(i+1, j+1) ==1)
+                    if (checkRight(i,j))
                         ++surroundingCells;
-                    if (check(i, j+1)==1)
+                    if (checkUpLeft(i,j))
                         ++surroundingCells;
-                    if(check(i-1, j+1) == 1)
+                    if(checkUpRight(i,j))
                         ++surroundingCells;
-                    if(check(i-1, j) ==1)
+                    if(checkUp(i,j))
                         surroundingCells++;
                     if(surroundingCells < 2){
                         board[i][j] = 0;
@@ -73,15 +72,15 @@ public class GameBoard {
                         board[i][j] = 1;
                     }
                 }else if(j == 0) {
-                    if (check(i + 1, j) == 1)
+                    if (checkUp(i,j))
                         ++surroundingCells;
-                    if (check(i + 1, j + 1) == 1)
+                    if (checkDown(i,j))
                         ++surroundingCells;
-                    if (check(i, j + 1) == 1)
+                    if (checkRight(i,j))
                         ++surroundingCells;
-                    if (check(i - 1, j) == 1)
+                    if (checkUpRight(i,j))
                         ++surroundingCells;
-                    if (check(i - 1, j + 1) == 1)
+                    if (checkDownRight(i,j))
                         surroundingCells++;
                     if (surroundingCells < 2) {
                         board[i][j] = 0;
@@ -94,18 +93,15 @@ public class GameBoard {
                     }
                 }
                 //TODO CHANGE THE FOLLOWING TO MATCH FOR X,Y == MAX
-                //currently just copy and pasted from the previous section
-                //TODO is x == i and y == j?
-                //assuming ^^ for now
                 //TODO MIGHT BE ERROR EXCEEDING BOUNDS i.e THE CORNERS OF THE BOARD
                 if(i == x-1 && j == y-1){
                     //encapsulate these if statements into a separate method, checkSurrounding?
                     //maybe implement it only for the inside squares?
-                    if( check(i-1, j) ==1)
+                    if( checkDown(i,j))
                         ++surroundingCells;
-                    if (check(i-1, j-1) ==1)
+                    if (checkLeft(i,j))
                         ++surroundingCells;
-                    if (check(i, j-1)==1)
+                    if (checkDownLeft(i,j))
                         ++surroundingCells;
                     if(surroundingCells < 2){
                         board[i][j] = 0;
@@ -117,16 +113,16 @@ public class GameBoard {
                         board[i][j] = 1;
                     }
                     //DONE UP TO HERE ------------------------------------
-                } else if(i == x){
-                    if( check(i-1, j) ==1)
+                } else if(i == x-1){
+                    if( checkLeft(i,j))
                         ++surroundingCells;
-                    if (check(i-1, j+1) ==1)
+                    if (checkDown(i,j))
                         ++surroundingCells;
-                    if (check(i, j)==1)
+                    if (checkRight(i,j))
                         ++surroundingCells;
-                    if(check(i-1, j+1) == 1)
+                    if(checkDownLeft(i,j))
                         ++surroundingCells;
-                    if(check(i, j+1) ==1)
+                    if(checkDownRight(i,j))
                         surroundingCells++;
                     if(surroundingCells < 2){
                         board[i][j] = 0;
@@ -137,7 +133,7 @@ public class GameBoard {
                     }else if( board[i][j] == 0 &&(surroundingCells == 2)){
                         board[i][j] = 1;
                     }
-                }else if(i == 0) {
+                }else if(j == y-1) {
                     if (check(i + 1, j) == 1)
                         ++surroundingCells;
                     if (check(i + 1, j + 1) == 1)
@@ -193,11 +189,61 @@ public class GameBoard {
 
     }
 
-    private int check(int i, int j){
-        if(board[i][j] == 1){
-            return 1;
+
+    private boolean checkLeft(int i, int j){
+        if(board[-i][j] == 1){
+            return true;
         }else{
-            return 0;
+            return false;
         }
-    }
+    };
+    private boolean checkRight(int i, int j){
+        if(board[+i][j] == 1){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    private boolean checkUp(int i, int j){
+        if(board[i][+j] == 1){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    private boolean checkDown(int i, int j){
+        if(board[i][-j] == 1){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    private boolean checkUpLeft(int i, int j){
+        if(board[-i][+j] == 1){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    private boolean checkUpRight(int i, int j){
+        if(board[+i][+j] == 1){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    private boolean checkDownLeft(int i, int j){
+        if(board[-i][-j] == 1){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    private boolean checkDownRight(int i, int j){
+        if(board[+i][-j] == 1){
+            return true;
+        }else{
+            return false;
+        }
+    };
 }
